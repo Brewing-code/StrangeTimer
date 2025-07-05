@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brewing Process Timer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    #step { font-size: 1.5em; margin-bottom: 1em; }
+    button { font-size: 1.2em; padding: 0.5em 1.5em; }
+    table { margin-top: 2em; border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Brewing Process Timer</h1>
+  <div id="step"></div>
+  <button id="nextBtn">Start Process</button>
+  <table id="resultsTable" >
+    <thead>
+      <tr>
+        <th>Step</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const steps = [
+      "Mash in starts",
+      "Mash in ends - Conversion starts",
+      "Recirculation starts",
+      "Recirculation ends - Lauter starts",
+      "Sparge starts",
+      "Sparge ends",
+      "Lauter ends",
+      "Boil starts",
+      "Boil ends",
+      "Whirlpool starts",
+      "Whirlpool ends",
+      "Hopstand starts",
+      "Hopstand ends",
+      "Cooling starts",
+      "Cooling ends"
+    ];
+
+    let currentStep = 0;
+    const results = [];
+    const stepDiv = document.getElementById('step');
+    const nextBtn = document.getElementById('nextBtn');
+    const resultsTable = document.getElementById('resultsTable');
+    const tbody = resultsTable.querySelector('tbody');
+
+    function updateStep() {
+      if (currentStep < steps.length) {
+        stepDiv.textContent = `Next Step: ${steps[currentStep]}`;
+        nextBtn.textContent = currentStep === 0 ? "Stamp Step" : "Next Step";
+      } else {
+        stepDiv.textContent = "Process Complete!";
+        nextBtn.style.display = "none";
+        
+      }
+    }
+
+    function addResult(step, timestamp) {
+      const row = document.createElement('tr');
+      const stepCell = document.createElement('td');
+      const timeCell = document.createElement('td');
+      stepCell.textContent = step;
+      timeCell.textContent = timestamp;
+      row.appendChild(stepCell);
+      row.appendChild(timeCell);
+      tbody.appendChild(row);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      if (currentStep < steps.length) {
+        addResult(steps[currentStep], timeString);
+        results.push({ step: steps[currentStep], time: timeString });
+        currentStep++;
+        updateStep();
+      }
+    });
+
+    // Initialize
+    updateStep();
+  </script>
+</body>
+</html>
