@@ -3,14 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Brewing Process Timer</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2em; }
-    #step { font-size: 1.5em; margin-bottom: 1em; }
-    button { font-size: 1.2em; padding: 0.5em 1.5em; }
-    table { margin-top: 2em; border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }
-    th { background: #f0f0f0; }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  
 </head>
 <body>
   <h1>Brewing Process Timer</h1>
@@ -25,7 +19,7 @@
     </thead>
     <tbody></tbody>
   </table>
-
+    <button id="downloadBtn">Download Table as CSV</button>
   <script>
     const steps = [
       "Mash in starts",
@@ -83,6 +77,27 @@
         currentStep++;
         updateStep();
       }
+    
+
+
+});
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  let csvContent = "Step,Timestamp\n";
+  results.forEach(row => {
+    csvContent += `"${row.step}","${row.time}"\n`;
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'brewing_process.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+// ...existing
     });
 
     // Initialize
