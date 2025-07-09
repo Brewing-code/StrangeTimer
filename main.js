@@ -61,20 +61,13 @@ document.addEventListener('touchstart', unlockAudio, { once: true });
 document.addEventListener('click', unlockAudio, { once: true });
 
   function playAlarmLoop() {
-    if (!alarmAudio) {
-      alarmAudio = new Audio('alarm.mp3');
-      alarmAudio.loop = true;
-    }
-    alarmAudio.currentTime = 0;
-    alarmAudio.play();
-  }
-
-  function stopAlarmLoop() {
-    if (alarmAudio) {
-      alarmAudio.pause();
-      alarmAudio.currentTime = 0;
-    }
-  }
+  alarmAudio.currentTime = 0;
+  alarmAudio.play();
+}
+function stopAlarmLoop() {
+  alarmAudio.pause();
+  alarmAudio.currentTime = 0;
+}
 
   // TIMER
   let timerInterval;
