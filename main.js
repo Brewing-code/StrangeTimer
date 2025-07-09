@@ -173,9 +173,9 @@ function stopAlarmLoop() {
   let formHtml = '<form id="alarmForm">';
   alarmSteps.forEach(step => {
     formHtml += `
-      <label style="display:block;margin:10px 0 5px 0;">${step.label} (minutos):</label>
-      <input type="number" min="0" value="${step.default}" id="alarm_${step.idx}" style="width:80px;">
-    `;
+  <label style="display:block;margin:10px 0 5px 0;">${step.label} (minutos):</label>
+  <input type="number" min="0" step="any" value="${step.default}" id="alarm_${step.idx}" style="width:80px;">
+`;
   });
   formHtml += '</form>';
 
