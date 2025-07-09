@@ -50,12 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Unlock audio on first user interaction
 function unlockAudio() {
+  const previousVolume = alarmAudio.volume;
+  alarmAudio.volume = 0; // Mute
   alarmAudio.play().then(() => {
     alarmAudio.pause();
     alarmAudio.currentTime = 0;
+    alarmAudio.volume = previousVolume; // Restore volume
     document.removeEventListener('touchstart', unlockAudio);
     document.removeEventListener('click', unlockAudio);
-  }).catch(() => {});
+  }).catch(() => {
+    alarmAudio.volume = previousVolume; // Restore even if failed
+  });
 }
 document.addEventListener('touchstart', unlockAudio, { once: true });
 document.addEventListener('click', unlockAudio, { once: true });
