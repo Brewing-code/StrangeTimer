@@ -45,7 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const tbody = resultsTable.querySelector('tbody');
 
   let alarmTimeout;
-  let alarmAudio;
+  let alarmAudio = new Audio('alarm.mp3');
+  alarmAudio.loop = true;
+
+// Unlock audio on first user interaction
+function unlockAudio() {
+  alarmAudio.play().then(() => {
+    alarmAudio.pause();
+    alarmAudio.currentTime = 0;
+    document.removeEventListener('touchstart', unlockAudio);
+    document.removeEventListener('click', unlockAudio);
+  }).catch(() => {});
+}
+document.addEventListener('touchstart', unlockAudio, { once: true });
+document.addEventListener('click', unlockAudio, { once: true });
 
   function playAlarmLoop() {
     if (!alarmAudio) {
