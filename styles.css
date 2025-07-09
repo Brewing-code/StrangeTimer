@@ -125,3 +125,48 @@ h1 {
 .my-confirm-btn:focus {
   box-shadow: 0 0 0 2px #838683 !important;
 }
+
+/* Responsive styles for screens up to 900px wide */
+@media (max-width: 900px) {
+  .all {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 10px;
+  }
+  .main-panel {
+    width: 100%;
+    margin-left: 0;
+    align-items: stretch;
+  }
+  #timer-panel {
+    margin-left: 0;
+    margin-top: 20px;
+    min-width: unset;
+    width: 100%;
+    font-size: 2em;
+  }
+  table {
+    width: 100%;
+    font-size: 0.95em;
+  }
+}
+
+/* Even more compact for small phones */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+    padding: 0.5em;
+  }
+  #timer-panel {
+    font-size: 1.5em;
+    padding: 0.5em;
+  }
+  button, #downloadBtn {
+    font-size: 1em;
+    padding: 0.5em 1em;
+  }
+  th, td {
+    font-size: 0.95em;
+    padding: 0.3em;
+  }
+}
