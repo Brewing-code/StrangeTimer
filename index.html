@@ -2,106 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Brewing Process Timer</title>
+  <title>Temporizador de coccion</title>
   <link rel="stylesheet" href="styles.css" />
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <h1>Brewing Process Timer</h1>
-  <div id="step"></div>
-  <button id="nextBtn">Start Process</button>
-  <table id="resultsTable" >
-    <thead>
-      <tr>
-        <th>Step</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-    <button id="downloadBtn" class="tabla">Download Table</button>
-  <script>
-    const steps = [
-      "Mash in starts",
-      "Mash in ends - Conversion starts",
-      "Recirculation starts",
-      "Recirculation ends - Lauter starts",
-      "Sparge starts",
-      "Sparge ends",
-      "Lauter ends",
-      "Boil starts",
-      "Boil ends",
-      "Whirlpool starts",
-      "Whirlpool ends",
-      "Hopstand starts",
-      "Hopstand ends",
-      "Cooling starts",
-      "Cooling ends"
-    ];
-
-    let currentStep = 0;
-    const results = [];
-    const stepDiv = document.getElementById('step');
-    const nextBtn = document.getElementById('nextBtn');
-    const resultsTable = document.getElementById('resultsTable');
-    const tbody = resultsTable.querySelector('tbody');
-
-    function updateStep() {
-      if (currentStep < steps.length) {
-        stepDiv.textContent = `Next Step: ${steps[currentStep]}`;
-        nextBtn.textContent = currentStep === 0 ? "Stamp Step" : "Next Step";
-      } else {
-        stepDiv.textContent = "Process Complete!";
-        nextBtn.style.display = "none";
-        
-      }
-    }
-
-    function addResult(step, timestamp) {
-      const row = document.createElement('tr');
-      const stepCell = document.createElement('td');
-      const timeCell = document.createElement('td');
-      stepCell.textContent = step;
-      timeCell.textContent = timestamp;
-      row.appendChild(stepCell);
-      row.appendChild(timeCell);
-      tbody.appendChild(row);
-    }
-
-    nextBtn.addEventListener('click', () => {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString();
-      if (currentStep < steps.length) {
-        addResult(steps[currentStep], timeString);
-        results.push({ step: steps[currentStep], time: timeString });
-        currentStep++;
-        updateStep();
-      }
-    
-
-
-});
-document.getElementById('downloadBtn').addEventListener('click', () => {
-  let csvContent = "Step,Timestamp\n";
-  results.forEach(row => {
-    csvContent += `"${row.step}","${row.time}"\n`;
-  });
-
-  const blob = new Blob([csvContent], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'brewing_process.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-// ...existing
-    });
-
-    // Initialize
-    updateStep();
-  </script>
+  <h1>Temporizador de coccion</h1>
+  <div class="all">
+    <div class="main-panel">
+      <div id="step"></div>
+      <button id="nextBtn">Iniciar Empaste</button>
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Paso</th>
+            <th>Horario</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="timer-panel">
+      <span id="timer">00:00</span>
+    </div>
+  </div>
+  <button id="downloadBtn" class="tabla">Descargar tabla</button>
+  <script src="main.js"></script>
 </body>
 </html>
